@@ -3,26 +3,9 @@ import Location from './Location';
 import WeatherData from './WeatherData';
 import './styles.css';
 import {
-    SUNNY,
-    CLOUD,
-} from '../../constants/weathers';
-import {
     API_WEATHER
-} from '../../constants/weather-api'
-
-const data = {
-    temperature: 5,
-    weatherState: CLOUD,
-    humidity: 10,
-    wind: 10
-};
-
-const data2 = {
-    temperature: 5,
-    weatherState: SUNNY,
-    humidity: 20,
-    wind: 4
-};
+} from '../../constants/weather-api';
+import transformWeather from '../../services/transformWeather';
 
 class WeatherLocation extends React.Component {
 
@@ -30,29 +13,36 @@ class WeatherLocation extends React.Component {
         super();
         this.state = {
             city: 'Medellin',
-            data: data2
+            data: null
         };
+    }  
+    
+    componentDidMount = () => {
+        console.log("componentDidMount");
+        this.handleUpdateClick();
+    }
+    
+    componentDidUpdate = (prevProps, prevState) => {
+        console.log("componentDidUpdate")
     }
     
     handleUpdateClick = () => {
-        fetch(API_WEATHER).then(res => {                            
-            this.setState({
-                city: 'Medellin!',
-                data: data
-            });
+        fetch(API_WEATHER).then(res => {                                        
             return res.json();
-        }).then(data => {
-            console.log(data);
+        }).then(data => {            
+            const newWeather = transformWeather(data.list[0]);        
+            this.setState({
+                data: newWeather
+            });
         });        
     }
     
-    render() {     
+    render() {                     
         const {city, data} = this.state;   
         return (
             <div className="weatherLocationCont">
                 <Location city={city}></Location>
-                <WeatherData data={data}></WeatherData>
-                <button onClick={this.handleUpdateClick}>Actualizar</button>
+                {data ? <WeatherData data={data}></WeatherData> : 'Cargando...'}                
             </div>
         )
     }

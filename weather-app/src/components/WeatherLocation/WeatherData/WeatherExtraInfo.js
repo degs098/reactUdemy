@@ -14,7 +14,7 @@ class WeatherExtraInfo extends React.Component {
 
 WeatherExtraInfo.propTypes = {
     humidity: PropTypes.number.isRequired,
-    wind: PropTypes.number.isRequired,
+    wind: PropTypes.string.isRequired,
 }
 
 export default WeatherExtraInfo;
