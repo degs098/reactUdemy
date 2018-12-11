@@ -1,0 +1,18 @@
+.locationList{
+    height: 90vh;
+    overflow-y: auto;
+    background: #313e4a;
+}
+
+.locationList > .weatherLocationCont{
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 766px){
+    .locationList{        
+        max-height: 60vh;
+        overflow: auto;
+        margin-bottom: 20px;
+    }
+}
