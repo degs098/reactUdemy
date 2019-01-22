@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
-import LocationList from './components/LocationList/LocationList';
+import LocationListContainer from './containers/LocationListContainer';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import Paper from '@material-ui/core/Paper';
 import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
 import Toolbar from '@material-ui/core/Toolbar';
-import ForecastExtended from './components/ForecastExtended';
+import ForecastExtendedContainer from './containers/ForecastExtendedContainer';
 
 const cities = [
   'London,uk',
@@ -19,19 +19,7 @@ const cities = [
 
 class App extends Component {
 
-  constructor(){
-    super();
-    this.state = {
-      city: null
-    };
-  }
-
-  handleSelectionLocation = city => {
-    this.setState({city});    
-  }
-
   render() {
-    const {city} = this.state;
     return (
       <header className="App-header">
         <Grid className="App">
@@ -46,12 +34,12 @@ class App extends Component {
           </Row>
           <Row>
             <Col xs={12} md={6}>
-              <LocationList cities={cities} onSelectedLocation={this.handleSelectionLocation}></LocationList>
+              <LocationListContainer cities={cities}></LocationListContainer>
             </Col>
             <Col xs={12} md={6}>
               <Paper elevation={4}>
                 <div className="details">
-                  {city ? <ForecastExtended city={city}></ForecastExtended> : <h2>No se seleccionó ninguna ciudad</h2>}
+                  <ForecastExtendedContainer></ForecastExtendedContainer>
                 </div>
               </Paper>
             </Col>
